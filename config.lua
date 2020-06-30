@@ -1,5 +1,5 @@
 Armoury = {}
 
 Armoury.Locations = {
-    vector3(0,0,0),
+    vector3(452.41,-980.08,30.69),
 }

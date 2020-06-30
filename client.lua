@@ -51,7 +51,7 @@ function GetClosestPlayer()
     return closestPlayer, closestDistance
 end
 
--- Draw Text Over Spawned Spikes --
+-- Draw Text Over Spawned Spikes and Armoury --
 Citizen.CreateThread(function()
     local sleep = 1000
     local player = GetPlayerPed(-1)
@@ -69,6 +69,28 @@ Citizen.CreateThread(function()
                     exports["drp_progressBars"]:startUI(2500,"Packing Spike Strip")
                     Citizen.Wait(2500)
                     deleteSpikes(spikePos)
+                end
+            end
+        end
+        if onDuty then
+            for k,v in ipairs(Armoury.Locations) do
+                local distance = Vdist(playerPos.x,playerPos.y,playerPos.z,v.x,v.y,v.z)
+                if distance <= 3.0 then
+                    sleep = 5
+                    exports["drp_core"]:DrawText3Ds(v.x,v.y,v.z,"Press ~b~E~w~ to grab your kit")
+                    if IsControlJustPressed(1,86) then
+                        local loadout = {
+                            GetHashKey("weapon_nightstick"),
+                            GetHashKey("weapon_stungun"),
+                            GetHashKey("weapon_flashlight"),
+                            GetHashKey("weapon_combatpistol"),
+                            GetHashKey("weapon_carbinerifle_mk2")
+                        }
+                        for k,v in ipairs(loadout) do
+                            GiveWeaponToPed(player,v,256,false,false)
+                        end
+                        SetPedArmour(player,100)
+                    end
                 end
             end
         end
