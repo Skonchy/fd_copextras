@@ -56,7 +56,9 @@ Citizen.CreateThread(function()
     local sleep = 1000
     local player = GetPlayerPed(-1)
     while true do
-        TriggerServerEvent("fd_copextras:checkOnDuty")
+        if exports["drp_id"]:SpawnedInAndLoaded() then
+            TriggerServerEvent("fd_copextras:checkOnDuty")
+        end
         local playerPos = GetEntityCoords(player)
         for k,v in ipairs(spikes) do
             local spikePos = v[2]
@@ -102,7 +104,9 @@ Citizen.CreateThread(function()
     local sleep
     local player = GetPlayerPed(-1)
     while true do
-        TriggerServerEvent("fd_copextras:checkOnDuty")
+        if exports["drp_id"]:SpawnedInAndLoaded() then
+            TriggerServerEvent("fd_copextras:checkOnDuty")
+        end
         if onDuty then
             sleep = 10
             if IsControlJustPressed(1,73) and (GetVehiclePedIsIn(player,false) == 0) then
